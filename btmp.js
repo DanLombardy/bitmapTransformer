@@ -67,10 +67,16 @@ function binarifyColorTable(tbl){
   return tbl;
 }
 
+function rearrangePixels(arry){
+  var newArry = arry;
+  newArry.reverse();
+  return newArry;
+}
+
 /*BEGIN functions to recreate and insert buffers*/
 
 //transform color palette to insertable buffer
-function takeTransform(tbl, bufferSize){
+function takeTransformPalette(tbl, bufferSize){
   var mainBuf = new Buffer(bufferSize);
   var t=0;
   for(var y=0; y<tbl.length; y++){
@@ -83,16 +89,34 @@ function takeTransform(tbl, bufferSize){
   return mainBuf;
 }
 
+function takeTransformPixels(arry, bufferSize){
+  var mainBuf = new Buffer(bufferSize);
+  for(var v=0; v<arry.length; v++){
+    mainBuf.writeUInt8(arry[v], v);
+  }
+  return mainBuf;
+}
+
+
 //shove updated color palette into new bitmap and save
-function prepBMP(){
-  var map = bitmap;
-takeTransform(binarifyColorTable(getColorTable()), 1078).copy(map, 54, 0)
+function prepColorBMP(){
+  var map = fs.readFileSync('bitmap1.bmp');
+takeTransformPalette(binarifyColorTable(getColorTable()), 1078).copy(map, 54, 0)
 fs.appendFile('mrTest12.bmp', map, function (err) {
   if (err) throw err;
   console.log('The "data to append" was appended to file!');
 });
 }
 
+//shove updated pixel data into new bitmap and save
+function prepPixelBMP(){
+  var map = fs.readFileSync('bitmap1.bmp');
+  takeTransformPixels(rearrangePixels(getPixelData()), 10000).copy(map, 1078, 0);
+  fs.appendFile('mrsTest1.bmp', map, function(err) {
+    if (err) throw err;
+    console.log('created file');
+  });
+}
 /*END functions to recreate buffers*/
 
 
@@ -112,3 +136,6 @@ function conslog(){
   console.log(row1);
   console.log('first pixel: ' + colorTable[28].b + ' ' + colorTable[28].g + ' '+ colorTable[28].r);
 };
+
+// uncomment this to run pixel... currently can't run both prepColorBMP and this simultaneously --> prepPixelBMP();
+prepColorBMP();
