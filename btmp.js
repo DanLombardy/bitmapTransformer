@@ -11,6 +11,7 @@ var bitsPerPixel = bitmap.readUInt16LE(28);
 var numColors = bitmap.readUInt32LE(46);
 
 
+
 function getColorTable(){
   var indexedTable = [];
   for(var e=54; e<1078; e+=4){
@@ -25,10 +26,39 @@ function getColorTable(){
   return indexedTable;
 }
 
+function transColorTable(tbl){
+  var tempTbl = tbl;
+  for(var i=0; i<tempTbl.length; i++){
+    if(tempTbl[i].r < 150){
+      tempTbl[i].r += 50;
+    };
+    if(tempTbl[i].g < 150){
+      tempTbl[i].g += 50;
+    };
+  }
+  return tempTbl;
+}
 
+function binarifyColorTable(tbl){
+  var mainBuf = new Buffer(1078)
+  var t = 0;
+  for(var g=0; g<tbl.length; g++){
+    /*if(tbl[g].r < 200){
+      tbl[g].r += 55;
+    }*/
 
-
-
+    mainBuf.writeUInt8((tbl[g].b * (0.07)), t);
+    t++;
+    mainBuf.writeUInt8(tbl[g].g * (0.72), t);
+    t++;
+    mainBuf.writeUInt8(tbl[g].r * (0.21), t);
+    t++;
+    mainBuf.writeUInt8(tbl[g].a, t);
+    t++;
+  }
+  //console.log(buf);
+  return mainBuf;
+}
 
 function getRow() {
   var row = [];
@@ -51,5 +81,18 @@ function conslog(){
   console.log('first pixel: ' + colorTable[28].b + ' ' + colorTable[28].g + ' '+ colorTable[28].r);
 };
 
+console.log(bitmap);
+console.log(bitmap[0]);
+console.log(bitmap[1]);
 
-conslog();
+console.log(binarifyColorTable(getColorTable()));
+
+var newPal = binarifyColorTable(getColorTable());
+
+newPal.copy(bitmap, 54, 0)
+
+
+fs.appendFile('mrTest10.bmp', bitmap, function (err) {
+  if (err) throw err;
+  console.log('The "data to append" was appended to file!');
+});
