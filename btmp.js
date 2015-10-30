@@ -26,26 +26,21 @@ function getColorTable(){
   return indexedTable;
 }
 
-function transColorTable(tbl){
-  var tempTbl = tbl;
-  for(var i=0; i<tempTbl.length; i++){
-    if(tempTbl[i].r < 150){
-      tempTbl[i].r += 50;
-    };
-    if(tempTbl[i].g < 150){
-      tempTbl[i].g += 50;
-    };
+function getPixelData(){
+  var newTable = [];
+  for(var a=1078; a<bitmap.length; a++){
+    newTable.push(bitmap[a]);
   }
-  return tempTbl;
+  return newTable;
 }
 
 function binarifyColorTable(tbl){
-  var mainBuf = new Buffer(1078)
-  var t = 0;
   for(var g=0; g<tbl.length; g++){
-    /*if(tbl[g].r < 200){
-      tbl[g].r += 55;
-    }*/
+      var avg = (tbl[g].r + tbl[g].b + tbl[g].g)/3;
+    tbl[g].r = avg;
+    tbl[g].g = avg;
+    tbl[g].b = avg;
+    /*
     var avg = (tbl[g].r + tbl[g].b + tbl[g].g)/3;
     mainBuf.writeUInt8(avg, t);
     t++;
@@ -55,8 +50,21 @@ function binarifyColorTable(tbl){
     t++;
     mainBuf.writeUInt8(tbl[g].a, t)
     t++;
+    */
   }
-  //console.log(buf);
+  return tbl;
+}
+
+function takeTransform(tbl){
+  var mainBuf = new Buffer(1078);
+  var t=0;
+  for(var y=0; y<tbl.length; y++){
+    mainBuf.writeUInt8(tbl[y].b, t);
+    mainBuf.writeUInt8(tbl[y].g, t+1);
+    mainBuf.writeUInt8(tbl[y].r, t+2);
+    mainBuf.writeUInt8(tbl[y].a, t+3);
+    t+=4;
+  }
   return mainBuf;
 }
 
@@ -67,6 +75,17 @@ function getRow() {
   }
   return row;
 }
+
+var newPal = takeTransform(binarifyColorTable(getColorTable()));
+
+newPal.copy(bitmap, 54, 0)
+
+
+fs.appendFile('mrTest10.bmp', bitmap, function (err) {
+  if (err) throw err;
+  console.log('The "data to append" was appended to file!');
+});
+
 function conslog(){
   console.log('size: ' + size);
   console.log('pixelData: ' + pixelData);
@@ -80,13 +99,3 @@ function conslog(){
   console.log(row1);
   console.log('first pixel: ' + colorTable[28].b + ' ' + colorTable[28].g + ' '+ colorTable[28].r);
 };
-
-var newPal = binarifyColorTable(getColorTable());
-
-newPal.copy(bitmap, 54, 0)
-
-
-fs.appendFile('mrTest10.bmp', bitmap, function (err) {
-  if (err) throw err;
-  console.log('The "data to append" was appended to file!');
-});
