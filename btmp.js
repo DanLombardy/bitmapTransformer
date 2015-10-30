@@ -46,14 +46,14 @@ function binarifyColorTable(tbl){
     /*if(tbl[g].r < 200){
       tbl[g].r += 55;
     }*/
-
-    mainBuf.writeUInt8((tbl[g].b * (0.07)), t);
+    var avg = (tbl[g].r + tbl[g].b + tbl[g].g)/3;
+    mainBuf.writeUInt8(avg, t);
     t++;
-    mainBuf.writeUInt8(tbl[g].g * (0.72), t);
+    mainBuf.writeUInt8(avg, t);
     t++;
-    mainBuf.writeUInt8(tbl[g].r * (0.21), t);
+    mainBuf.writeUInt8(avg, t);
     t++;
-    mainBuf.writeUInt8(tbl[g].a, t);
+    mainBuf.writeUInt8(tbl[g].a, t)
     t++;
   }
   //console.log(buf);
@@ -80,12 +80,6 @@ function conslog(){
   console.log(row1);
   console.log('first pixel: ' + colorTable[28].b + ' ' + colorTable[28].g + ' '+ colorTable[28].r);
 };
-
-console.log(bitmap);
-console.log(bitmap[0]);
-console.log(bitmap[1]);
-
-console.log(binarifyColorTable(getColorTable()));
 
 var newPal = binarifyColorTable(getColorTable());
 
