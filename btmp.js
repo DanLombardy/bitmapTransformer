@@ -1,6 +1,6 @@
 fs = require('fs');
 
-//header
+//header info
 var bitmap = fs.readFileSync('bitmap1.bmp');
 var format = bitmap.toString('utf-8',0,2);
 var size = bitmap.readUInt32LE(2);
@@ -11,7 +11,8 @@ var bitsPerPixel = bitmap.readUInt16LE(28);
 var numColors = bitmap.readUInt32LE(46);
 
 
-
+/* BEGIN functions to get modifiable sections of bitmap buffer */
+//pull color palette from bmp buffer
 function getColorTable(){
   var indexedTable = [];
   for(var e=54; e<1078; e+=4){
@@ -26,6 +27,7 @@ function getColorTable(){
   return indexedTable;
 }
 
+//pull pixel data from bmp buffer
 function getPixelData(){
   var newTable = [];
   for(var a=1078; a<bitmap.length; a++){
@@ -34,6 +36,16 @@ function getPixelData(){
   return newTable;
 }
 
+function getRow() {
+  var row = [];
+  for(var i=1078; i<=1177; i++){
+    row.push(bitmap.readUInt8(i));
+  }
+  return row;
+}
+/* END functions to get modifiable sections of bitmap buffer */
+
+//EXAMPLE FUNCTION TO CONVERT PASSED PALETTE TO GRAYSCALE
 function binarifyColorTable(tbl){
   for(var g=0; g<tbl.length; g++){
       var avg = (tbl[g].r + tbl[g].b + tbl[g].g)/3;
@@ -55,8 +67,11 @@ function binarifyColorTable(tbl){
   return tbl;
 }
 
-function takeTransform(tbl){
-  var mainBuf = new Buffer(1078);
+/*BEGIN functions to recreate and insert buffers*/
+
+//transform color palette to insertable buffer
+function takeTransform(tbl, bufferSize){
+  var mainBuf = new Buffer(bufferSize);
   var t=0;
   for(var y=0; y<tbl.length; y++){
     mainBuf.writeUInt8(tbl[y].b, t);
@@ -68,24 +83,22 @@ function takeTransform(tbl){
   return mainBuf;
 }
 
-function getRow() {
-  var row = [];
-  for(var i=1078; i<=1177; i++){
-    row.push(bitmap.readUInt8(i));
-  }
-  return row;
-}
-
-var newPal = takeTransform(binarifyColorTable(getColorTable()));
-
-newPal.copy(bitmap, 54, 0)
-
-
-fs.appendFile('mrTest10.bmp', bitmap, function (err) {
+//shove updated color palette into new bitmap and save
+function prepBMP(){
+  var map = bitmap;
+takeTransform(binarifyColorTable(getColorTable()), 1078).copy(map, 54, 0)
+fs.appendFile('mrTest12.bmp', map, function (err) {
   if (err) throw err;
   console.log('The "data to append" was appended to file!');
 });
+}
 
+/*END functions to recreate buffers*/
+
+
+
+
+//RANDOM LOGGING FOR DEBUGGING BEFORE WE HAVE ACTUAL DEBUGGING
 function conslog(){
   console.log('size: ' + size);
   console.log('pixelData: ' + pixelData);
