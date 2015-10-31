@@ -73,6 +73,17 @@ function rearrangePixels(arry){
   return newArry;
 }
 
+function streak(arry){
+  var newArray = arry;
+  for(var i=0, offSet=0; i<(newArray.length/2)-1; i+=5, offSet++){
+    var mv = i+offSet;
+    arry[mv] = 0;
+    arry[newArray.length-mv] = 0;
+  }
+  newArray.splice(newArray.length-2,1);
+  return newArray;
+}
+
 /*BEGIN functions to recreate and insert buffers*/
 
 //transform color palette to insertable buffer
@@ -109,9 +120,9 @@ fs.appendFile('mrTest12.bmp', map, function (err) {
 }
 
 //shove updated pixel data into new bitmap and save
-function prepPixelBMP(){
+function prepPixelBMP(func){
   var map = fs.readFileSync('bitmap1.bmp');
-  takeTransformPixels(rearrangePixels(getPixelData()), 10000).copy(map, 1078, 0);
+  takeTransformPixels(streak(getPixelData()), 10000).copy(map, 1078, 0);
   fs.appendFile('mrsTest1.bmp', map, function(err) {
     if (err) throw err;
     console.log('created file');
@@ -138,4 +149,7 @@ function conslog(){
 };
 
 // uncomment this to run pixel... currently can't run both prepColorBMP and this simultaneously --> prepPixelBMP();
-prepColorBMP();
+//prepColorBMP();
+prepPixelBMP(streak);
+console.log(streak(getPixelData()).length);
+console.log(getPixelData().length);
