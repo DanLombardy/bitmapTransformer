@@ -151,7 +151,11 @@ function conslog(){
 
 // uncomment this to run pixel... currently can't run both prepColorBMP and this simultaneously --> prepPixelBMP();
 //prepColorBMP();
+<<<<<<< HEAD
 //prepPixelBMP(streak);
+=======
+prepPixelBMP(streak);
+>>>>>>> d933543e8874f185a152504751cc46783a3ab42c
 //console.log(streak(getPixelData()).length);
 //console.log(getPixelData().length);
 input.getInput();
