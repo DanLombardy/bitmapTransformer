@@ -1,4 +1,5 @@
 fs = require('fs');
+var input = require('./input.js')
 
 //header info
 var bitmap = fs.readFileSync('bitmap1.bmp');
@@ -150,6 +151,7 @@ function conslog(){
 
 // uncomment this to run pixel... currently can't run both prepColorBMP and this simultaneously --> prepPixelBMP();
 //prepColorBMP();
-prepPixelBMP(streak);
-console.log(streak(getPixelData()).length);
-console.log(getPixelData().length);
+//prepPixelBMP(streak);
+//console.log(streak(getPixelData()).length);
+//console.log(getPixelData().length);
+input.getInput();
