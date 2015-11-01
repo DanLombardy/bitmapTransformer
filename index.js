@@ -1,7 +1,8 @@
 "use strict";
 var palette = require(__dirname +'/lib/palette-translate');
 var pixel = require(__dirname + '/lib/pixel-translate');
-var input = require(__dirname + '/lib/input')
+var input = require(__dirname + '/lib/input');
+var transform = require(__dirname + '/lib/transform');
 var fs = require('fs');
 
 //header info
@@ -14,9 +15,17 @@ var height = bitmap.readUInt32LE(22);
 var bitsPerPixel = bitmap.readUInt16LE(28);
 var numColors = bitmap.readUInt32LE(46);
 
+//global variables
+var functionList = [];
+var i=0;
 
-//input.startInput();
-pixel.prepBMP();
+//TEE UP LIST OF FUNCTIONS TO PASS TO INPUT
+for(functionList[i++] in transform.transformList) {};
+
+function getInitial(input.AskAndEnter()){
+  console.log(input.GetResults + " is the result");
+}
+
 // uncomment this to run pixel... currently can't run both prepColorBMP and this simultaneously --> prepPixelBMP();
 ////console.log(streak(getPixelData()).length);
 //console.log(getPixelData().length);
