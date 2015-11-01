@@ -1,7 +1,6 @@
 "use strict";
 var palette = require(__dirname +'/lib/palette-translate');
 var pixel = require(__dirname + '/lib/pixel-translate');
-var transform = require(__dirname + '/lib/transform');
 var input = require(__dirname + '/lib/input')
 var fs = require('fs');
 
@@ -16,7 +15,11 @@ var bitsPerPixel = bitmap.readUInt16LE(28);
 var numColors = bitmap.readUInt32LE(46);
 
 
-
+//input.startInput();
+pixel.prepBMP();
+// uncomment this to run pixel... currently can't run both prepColorBMP and this simultaneously --> prepPixelBMP();
+////console.log(streak(getPixelData()).length);
+//console.log(getPixelData().length);
 //RANDOM LOGGING FOR DEBUGGING BEFORE WE HAVE ACTUAL DEBUGGING
 function conslog(){
   console.log('size: ' + size);
@@ -31,10 +34,3 @@ function conslog(){
   console.log(row1);
   console.log('first pixel: ' + colorTable[28].b + ' ' + colorTable[28].g + ' '+ colorTable[28].r);
 };
-
-input.startInput();
-// uncomment this to run pixel... currently can't run both prepColorBMP and this simultaneously --> prepPixelBMP();
-//prepColorBMP();
-////console.log(streak(getPixelData()).length);
-//console.log(getPixelData().length);
-//input.getInput();
