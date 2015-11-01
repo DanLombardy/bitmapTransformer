@@ -1,0 +1,22 @@
+{
+  "name": "bitmap-transformer",
+  "version": "0.1.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "test"
+  },
+  "dependencies": {
+    "prompt": "0.2.14"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/haverchuck/bitmapTransformer.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/haverchuck/bitmapTransformer/issues"
+  },
+  "homepage": "https://github.com/haverchuck/bitmapTransformer#readme"
+}
