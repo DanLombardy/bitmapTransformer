@@ -3,30 +3,19 @@ var input = module.exports = {};
 
 module.exports.getInput = function() {
 
-  var properties = [
-    {
-      name: 'username',
-      validator: /^[a-zA-Z\s\-]+$/,
-      warning: 'Username must be only letters, spaces, or dashes'
-    },
-    {
-      name: 'password',
-      hidden: true
-    }
-  ];
+  prompt.message = "Need Input: ".green;
 
   prompt.start();
 
-  prompt.get(properties, function (err, result) {
-    if (err) { return onErr(err); }
-    console.log('Command-line input received:');
-    console.log('  Username: ' + result.username);
-    console.log('  Password: ' + result.password);
-  });
+  console.log('Welcome to the bitmap transformer'.green);
 
-  function onErr(err) {
-    console.log(err);
-    return 1;
-  }
+  prompt.get([{
+    name: 'selection',
+    description: 'Enter an option'.magenta,
+    type: 'string',
+    required: true
+  }], function(err, results) {
+    console.log(results);
+  });
 
 };
