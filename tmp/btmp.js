@@ -124,15 +124,12 @@ fs.appendFile('mrTest12.bmp', map, function (err) {
 function prepPixelBMP(func){
   var map = fs.readFileSync('bitmap1.bmp');
   takeTransformPixels(streak(getPixelData()), 10000).copy(map, 1078, 0);
-  fs.appendFile('mrsTest1.bmp', map, function(err) {
+  fs.appendFile('mrsTest21.bmp', map, function(err) {
     if (err) throw err;
     console.log('created file');
   });
 }
 /*END functions to recreate buffers*/
-
-
-
 
 //RANDOM LOGGING FOR DEBUGGING BEFORE WE HAVE ACTUAL DEBUGGING
 function conslog(){
@@ -151,7 +148,9 @@ function conslog(){
 
 // uncomment this to run pixel... currently can't run both prepColorBMP and this simultaneously --> prepPixelBMP();
 //prepColorBMP();
+
 prepPixelBMP(streak);
+
 //console.log(streak(getPixelData()).length);
 //console.log(getPixelData().length);
 input.getInput();

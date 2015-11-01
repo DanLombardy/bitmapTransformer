@@ -1,12 +1,9 @@
 "use strict";
 var palette = require(__dirname +'/lib/palette-translate');
 var pixel = require(__dirname + '/lib/pixel-translate');
+var input = require(__dirname + '/lib/input');
 var transform = require(__dirname + '/lib/transform');
-
-
-
 var fs = require('fs');
-//var input = require('./input.js')
 
 //header info
 var bitmap = fs.readFileSync('bitmap1.bmp');
@@ -18,15 +15,20 @@ var height = bitmap.readUInt32LE(22);
 var bitsPerPixel = bitmap.readUInt16LE(28);
 var numColors = bitmap.readUInt32LE(46);
 
+//global variables
+var functionList = [];
+var i=0;
 
+//TEE UP LIST OF FUNCTIONS TO PASS TO INPUT
+for(functionList[i++] in transform.transformList) {};
 
+function getInitial(input.AskAndEnter()){
+  console.log(input.GetResults + " is the result");
+}
 
-
-
-
-
-/*END functions to recreate buffers*/
-
+// uncomment this to run pixel... currently can't run both prepColorBMP and this simultaneously --> prepPixelBMP();
+////console.log(streak(getPixelData()).length);
+//console.log(getPixelData().length);
 //RANDOM LOGGING FOR DEBUGGING BEFORE WE HAVE ACTUAL DEBUGGING
 function conslog(){
   console.log('size: ' + size);
@@ -41,10 +43,3 @@ function conslog(){
   console.log(row1);
   console.log('first pixel: ' + colorTable[28].b + ' ' + colorTable[28].g + ' '+ colorTable[28].r);
 };
-
-// uncomment this to run pixel... currently can't run both prepColorBMP and this simultaneously --> prepPixelBMP();
-//prepColorBMP();
-pixel.prepBMP(transform.streak);
-//console.log(streak(getPixelData()).length);
-//console.log(getPixelData().length);
-//input.getInput();
