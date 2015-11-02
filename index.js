@@ -4,7 +4,7 @@ var pixel = require(__dirname + '/lib/pixel-translate');
 var input = require(__dirname + '/lib/input');
 var transform = require(__dirname + '/lib/transform');
 var fs = require('fs');
-var EventEmitter = require("events").EventEmitter;
+
 
 //header info
 var bitmap = fs.readFileSync(__dirname + '/lib/bitmap1.bmp');
@@ -17,14 +17,14 @@ var functionDisplay = [];
 var i=0;
 for(functionDisplay[i++] in transform.transformList) {};
 
-function masterInput(run){
-  if(run){
+//function masterInput(run){
+  //if(run){
     input.startInput.AskAndEnter(functionDisplay);
     input.startInput.GetEntry(functionDisplay);
-  } else {
-    console.log('Thanks for screwing with bitmaps.');
-  }
-};
-masterInput(true);
+  //} else {
+   // console.log('Thanks for screwing with bitmaps.');
+  //}
+//};
+//masterInput(true);
 
-module.exports.masterInput = masterInput;
+//module.exports.masterInput = masterInput;
