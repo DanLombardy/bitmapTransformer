@@ -7,6 +7,7 @@
     "test": "test"
   },
   "dependencies": {
+    "gulp": "^3.9.0",
     "prompt": "0.2.14"
   },
   "repository": {
@@ -18,5 +19,12 @@
   "bugs": {
     "url": "https://github.com/haverchuck/bitmapTransformer/issues"
   },
-  "homepage": "https://github.com/haverchuck/bitmapTransformer#readme"
+  "homepage": "https://github.com/haverchuck/bitmapTransformer#readme",
+  "devDependencies": {
+    "chai": "^3.4.0",
+    "gulp-jshint": "^1.12.0",
+    "gulp-mocha": "^2.1.3",
+    "jshint": "^2.8.0",
+    "mocha": "^2.3.3"
+  }
 }
