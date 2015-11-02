@@ -4,43 +4,27 @@ var pixel = require(__dirname + '/lib/pixel-translate');
 var input = require(__dirname + '/lib/input');
 var transform = require(__dirname + '/lib/transform');
 var fs = require('fs');
+var EventEmitter = require("events").EventEmitter;
 
 //header info
-var bitmap = fs.readFileSync('bitmap1.bmp');
+var bitmap = fs.readFileSync(__dirname + '/lib/bitmap1.bmp');
 var format = bitmap.toString('utf-8',0,2);
-var size = bitmap.readUInt32LE(2);
-var pixelData = bitmap.readUInt32LE(10);
-var width = bitmap.readUInt32LE(18);
-var height = bitmap.readUInt32LE(22);
-var bitsPerPixel = bitmap.readUInt16LE(28);
-var numColors = bitmap.readUInt32LE(46);
+
 
 //global variables
-var functionList = [];
+var functionDisplay = [];
+//TEE UP LIST OF FUNCTION DISPLAY NAMES
 var i=0;
+for(functionDisplay[i++] in transform.transformList) {};
 
-//TEE UP LIST OF FUNCTIONS TO PASS TO INPUT
-for(functionList[i++] in transform.transformList) {};
-
-/*function getInitial(input.AskAndEnter()){
-  console.log(input.GetResults + " is the result");
-}*/
-
-// uncomment this to run pixel... currently can't run both prepColorBMP and this simultaneously --> prepPixelBMP();
-////console.log(streak(getPixelData()).length);
-//console.log(getPixelData().length);
-//RANDOM LOGGING FOR DEBUGGING BEFORE WE HAVE ACTUAL DEBUGGING
-function conslog(){
-  console.log('size: ' + size);
-  console.log('pixelData: ' + pixelData);
-  console.log('bitsPerPixel: ' + bitsPerPixel);
-  console.log('numColors: ' + numColors);
-  console.log('width: ' + width);
-  console.log('height: ' + height);
-  var colorTable = palette.getPalette();
-  console.log(colorTable);
-  var row1 = pixel.getRow();
-  console.log(row1);
-  console.log('first pixel: ' + colorTable[28].b + ' ' + colorTable[28].g + ' '+ colorTable[28].r);
-
+function masterInput(run){
+  if(run){
+    input.startInput.AskAndEnter(functionDisplay);
+    input.startInput.GetEntry(functionDisplay);
+  } else {
+    console.log('Thanks for screwing with bitmaps.');
+  }
 };
+masterInput(true);
+
+module.exports.masterInput = masterInput;
