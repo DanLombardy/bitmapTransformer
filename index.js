@@ -7,7 +7,7 @@ var fs = require('fs');
 var EventEmitter = require("events").EventEmitter;
 
 //header info
-var bitmap = fs.readFileSync('bitmap1.bmp');
+var bitmap = fs.readFileSync(__dirname + '/lib/bitmap1.bmp');
 var format = bitmap.toString('utf-8',0,2);
 var size = bitmap.readUInt32LE(2);
 var pixelData = bitmap.readUInt32LE(10);
@@ -17,30 +17,12 @@ var bitsPerPixel = bitmap.readUInt16LE(28);
 var numColors = bitmap.readUInt32LE(46);
 
 //global variables
-var functionList = [];
+var functionDisplay = [];
+
+//TEE UP LIST OF FUNCTION DISPLAY NAMES
 var i=0;
+for(functionDisplay[i++] in transform.transformList) {};
 
-//TEE UP LIST OF FUNCTIONS TO PASS TO INPUT
-for(functionList[i++] in transform.transformList) {};
+input.startInput.AskAndEnter(functionDisplay);
+input.startInput.GetEntry(functionDisplay);
 
-input.startInput.AskAndEnter(functionList);
-
-var slctn = input.startInput.GetEntry(input.startInput.GetResult);
-
-// uncomment this to run pixel... currently can't run both prepColorBMP and this simultaneously --> prepPixelBMP();
-////console.log(streak(getPixelData()).length);
-//console.log(getPixelData().length);
-//RANDOM LOGGING FOR DEBUGGING BEFORE WE HAVE ACTUAL DEBUGGING
-function conslog(){
-  console.log('size: ' + size);
-  console.log('pixelData: ' + pixelData);
-  console.log('bitsPerPixel: ' + bitsPerPixel);
-  console.log('numColors: ' + numColors);
-  console.log('width: ' + width);
-  console.log('height: ' + height);
-  var colorTable = getColorTable();
-  console.log(colorTable);
-  var row1 = getRow();
-  console.log(row1);
-  console.log('first pixel: ' + colorTable[28].b + ' ' + colorTable[28].g + ' '+ colorTable[28].r);
-};
