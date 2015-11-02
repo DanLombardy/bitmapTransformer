@@ -1,4 +1,4 @@
-"use strict";
+
 var palette = require(__dirname +'/lib/palette-translate');
 var pixel = require(__dirname + '/lib/pixel-translate');
 var input = require(__dirname + '/lib/input');
