@@ -22,9 +22,9 @@ var i=0;
 //TEE UP LIST OF FUNCTIONS TO PASS TO INPUT
 for(functionList[i++] in transform.transformList) {};
 
-function getInitial(input.AskAndEnter()){
+/*function getInitial(input.AskAndEnter()){
   console.log(input.GetResults + " is the result");
-}
+}*/
 
 // uncomment this to run pixel... currently can't run both prepColorBMP and this simultaneously --> prepPixelBMP();
 ////console.log(streak(getPixelData()).length);
@@ -37,9 +37,10 @@ function conslog(){
   console.log('numColors: ' + numColors);
   console.log('width: ' + width);
   console.log('height: ' + height);
-  var colorTable = getColorTable();
+  var colorTable = palette.getPalette();
   console.log(colorTable);
-  var row1 = getRow();
+  var row1 = pixel.getRow();
   console.log(row1);
   console.log('first pixel: ' + colorTable[28].b + ' ' + colorTable[28].g + ' '+ colorTable[28].r);
+
 };
