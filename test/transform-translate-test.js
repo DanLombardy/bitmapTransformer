@@ -37,9 +37,9 @@ describe('translates buffer to array and back to buffer', function(){
   });
 
   it('takes a transform and a bitmap, applies it to bitmap, and returns new bitmap', function(){
-    palette.prepBMP(transform.transformList.Make_It_Grayscale, 'bitmap1.bmp');
-    var bufferCheck = fs.readFileSync(__dirname + '/../mrTest13.bmp');
-    console.log(bufferCheck.readUInt8(0));
+    palette.prepBMP(transform.transformList['Color_Make_It_Grayscale'], __dirname + '/../lib/bitmap1.bmp', 'Color_Make_It_Grayscale');
+    var bufferCheck = fs.readFileSync(__dirname + '/../_Make_It_Grayscale.bmp');
+    //console.log(bufferCheck.readUInt8(0));
   });
 });
 
@@ -63,9 +63,9 @@ describe('translates pixel to buffer, applies transform, and to new buffer', fun
   });
 
   it('take updated pixel data and write to new file', function(){
-    pixel.prepBMP(transform.transformList.Make_It_Backwards, 'bitmap1.bmp');
-    var bufferCheck = fs.readFileSync(__dirname + '/../mrsTest1.bmp');
-    console.log(bufferCheck.readUInt8(0));
+    pixel.prepBMP(transform.transformList['Pixel_Make_It_Backwards'], __dirname + '/../lib/bitmap1.bmp', 'Pixel_Make_It_Backwards');
+    var bufferCheck = fs.readFileSync(__dirname + '/../_Make_It_Backwards.bmp');
+    //console.log(bufferCheck.readUInt8(0));
   });
 
 });

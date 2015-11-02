@@ -22,9 +22,7 @@ gulp.task('jshint:test', function(){
 gulp.task('jshint:app', function(){
   return gulp.src(appFiles)
   .pipe(jshint({
-    node: true
-  }))
-  .pipe(jshint.reporter('default'));
+  })).pipe(jshint.reporter('default'));
 });
 
 gulp.task('mocha:test', function(){
@@ -37,5 +35,5 @@ gulp.task('mocha:test', function(){
 
 
 gulp.task('jshint', ['jshint:test', 'jshint:app']);
-gulp.task('mocha', ['mocha:test']);
+//gulp.task('mocha', ['mocha:test']);
 gulp.task('default', ['jshint', 'mocha:test']);
