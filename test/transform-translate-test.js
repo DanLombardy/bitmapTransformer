@@ -5,7 +5,7 @@ var fs = require('fs');
 var palette = require(__dirname + '/../lib/palette-translate');
 var pixel = require(__dirname + '/../lib/pixel-translate');
 var transform = require(__dirname + '/../lib/transform');
-var bitmap = fs.readFileSync('bitmap1.bmp');
+var bitmap = fs.readFileSync(__dirname + '/../lib/bitmap1.bmp');
 
 describe('translates buffer to array and back to buffer', function(){
 
