@@ -14,10 +14,10 @@ describe('translates buffer to array and back to buffer', function(){
 
       expect(palette.getPalette(bitmap)).to.be.an('array');
       expect(palette.getPalette(bitmap)[1]).to.be.an('object');
-      expect(palette.getPalette(bitmap)[1]["r"]).to.be.a('number');
-      expect(palette.getPalette(bitmap)[1]["g"]).to.be.a('number');
-      expect(palette.getPalette(bitmap)[1]["b"]).to.be.a('number');
-      expect(palette.getPalette(bitmap)[1]["a"]).to.be.a('number');
+      expect(palette.getPalette(bitmap)[1].r).to.be.a('number');
+      expect(palette.getPalette(bitmap)[1].g).to.be.a('number');
+      expect(palette.getPalette(bitmap)[1].b).to.be.a('number');
+      expect(palette.getPalette(bitmap)[1].a).to.be.a('number');
 
 
   });
