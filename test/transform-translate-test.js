@@ -41,7 +41,7 @@ describe('translates buffer to array and back to buffer', function(){
   it('takes a transform and a bitmap, applies it to bitmap, and returns new bitmap', function(){
     palette.prepBMP(transform.transformList.Color_Make_It_Grayscale, __dirname + '/../lib/bitmap1.bmp', 'Color_Make_It_Grayscale');
     var bufferCheck = fs.readFileSync(__dirname + '/../_Make_It_Grayscale.bmp');
-    //console.log(bufferCheck.readUInt8(0));
+    console.log(bufferCheck.readUInt8());
   });
 });
 
