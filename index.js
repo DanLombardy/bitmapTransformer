@@ -1,4 +1,4 @@
-"use strict";
+
 var palette = require(__dirname +'/lib/palette-translate');
 var pixel = require(__dirname + '/lib/pixel-translate');
 var input = require(__dirname + '/lib/input');
@@ -14,8 +14,10 @@ var format = bitmap.toString('utf-8',0,2);
 //global variables
 var functionDisplay = [];
 //TEE UP LIST OF FUNCTION DISPLAY NAMES
-var i=0;
-for(functionDisplay[i++] in transform.transformList) {};
+
+for(var prop in transform.transformList){
+  functionDisplay.push(prop);
+}
 
 //function masterInput(run){
   //if(run){
